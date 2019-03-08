@@ -14,7 +14,16 @@
 
 // CODE HERE...
 
-
+function callBinding(magicAnimals, updateAnimal, id){
+    magicAnimals.map(val => {
+        if(val.id = id){
+            val.updateAnimal = updateAnimal;
+            val.updateAnimal = val.updateAnimal.bind(magicAnimals);
+            val.updateAnimal('Trogdor')
+        }
+    })
+    return magicAnimals
+}
 
 // *************
 // * PROBLEM 2 *
@@ -28,7 +37,19 @@
 // return the result of your updateAnimal invocation
 
 // CODE HERE...
-
+function applyBinding(magicAnimals, updateAnimal, id){
+    console.log(magicAnimals, updateAnimal )
+    magicAnimals.map(val => {
+        if(val.id = id){
+            console.log(val.favorites);
+            val.updateAnimal = updateAnimal;
+            val.updateAnimal = val.updateAnimal.bind(magicAnimals);
+            val.updateAnimal(['being majestic', 'eating rainbows'])
+        }
+    })
+    return magicAnimals
+    
+}
 
 
 // *************
@@ -49,6 +70,23 @@ var foo;
 
 // CODE HERE...
 
+function promiseMe($q){
+
+    var promise1 = new Promise(function(resolve, reject) {
+    setTimeout(()=>{
+        resolve('bar');
+        
+    }, 20)
+
+    
+    })
+    promise1.then(function(value){
+        foo=value;
+    })
+    
+    return promise1;
+}
+
 
 
 // *************
@@ -64,3 +102,17 @@ var foo;
 // and then resolve the array as you complete your promise.
 
 // CODE HERE...
+
+function emailList($q, $http){
+    return $http({
+        method: 'GET',
+        url: '/api/users'
+      }).then(results => {
+          console.log(results)
+          var emailArray=[];
+          results.data.map(val => {
+              emailArray.push(val.email)
+          })
+          return emailArray;
+      })
+}

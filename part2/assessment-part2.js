@@ -42,9 +42,15 @@ function noWeakLink() {
   return $http({
     method: 'GET',
     url: '/api/users'
+  }).then(results1 => {
+    firstUser=results1.data[0];
+    return results1;
+  }).then(results2 => {
+    thirdUser = results2.data[2]
+    return results2.data[9]
   })
   // CODE HERE...
-
+  
 }
 
 
@@ -74,8 +80,9 @@ function large() {
   return 'My name is ' + this.name + ' and I am very heavy!'
 }
 // CODE HERE...
-
-
+elephant.large = large;
+var boundToElephant = elephant.large;
+boundToElephant = boundToElephant.bind(elephant);
 
 // *************
 // * PROBLEM 3 *
@@ -89,7 +96,12 @@ function large() {
 
 // CODE HERE...
 
-
+function deathStar(capacity, crew){
+  
+  crew.capacity = capacity;
+  crew.capacity = crew.capacity.bind(crew)
+  return crew.capacity;
+}
 
 // *************
 // * PROBLEM 4 *
@@ -104,7 +116,11 @@ function large() {
 
 // CODE HERE...
 
-
+function accountingOffice(assets){
+  return function(liabilities){
+    return assets + liabilities;
+  }
+}
 
 // *************
 // * PROBLEM 5 *
@@ -129,7 +145,16 @@ function large() {
 
 // CODE HERE...
 
-
+function forgetter(name){
+  var items = [];
+  return function rememberall(item){
+    items.push(item)
+    return{
+      name: name,
+      remember: items
+    }
+  }
+}
 
 // *************
 // * PROBLEM 6 *
@@ -156,3 +181,38 @@ function large() {
 // NOTE: Neither hunger nor danger should be able to exceed 100 or drop below 0.
 
 // CODE HERE...
+
+var frodo = function(startingHungerValue, startingDangerValue){
+  console.log(startingHungerValue)
+  this.hunger= startingHungerValue;
+  
+  this.danger= startingDangerValue;
+  return{
+    dinnerOverFire :function(){
+      // console.log(this.hunger, 'this.hunger heeeyah');
+      this.hunger -= 25;
+      // console.log(this.hunger, 'this.hunger modified')
+      if(this.hunger < 0)this.hunger=0;
+      this.danger += 40;
+      if(this.danger > 100)this.danger=100;
+
+      
+      return{
+        hunger:this.hunger,
+        danger:this.danger
+      }
+    }, 
+    hidingInBush : function(){
+      this.hunger += 35;
+      if(this.hunger > 100)this.hunger=100;
+      this.danger -= 20;
+      if(this.danger < 0)this.danger=0;
+      return{
+        hunger:this.hunger,
+        danger:this.danger
+      }
+    }
+  }
+}
+
+//var samIsTheRealHero = new frodo(12, 14);
